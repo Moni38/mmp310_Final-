@@ -46,10 +46,10 @@ function draw() {
 
 
 function mousePressed() {
-    // trigger sound
-    song.play();
-
-    // change background color
-    background(random(255), random(255), random(255));
-
+    if (song.isPlaying()) {
+        // .isPlaying() returns a boolean
+        song.stop();
+    } else {
+        song.play();
+    }
 }
