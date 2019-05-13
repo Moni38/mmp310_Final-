@@ -39,7 +39,7 @@ function draw() {
     image(bgImg, x1, 0, width, height);
     image(bgImg, x2, 0, width, height);
     textFont('Burgee');
-    textSize(50);
+    textSize(45);
     fill(255,0,0);
     text("Merry Christmas", 50, 80);
 
