@@ -38,6 +38,7 @@ function draw() {
     //This will make the background scroll endlessly
     image(bgImg, x1, 0, width, height);
     image(bgImg, x2, 0, width, height);
+    text("Merry Christmas", 100, 100);
 
     x1 -= scrollSpeed;
     x2 -= scrollSpeed;
@@ -97,7 +98,7 @@ function drawStars() {
 }
 
 function drawCloud(xpos) {
-    var cloudColor = 210;
+    var cloudColor = 150;
     var cloudTransparency = 80;
     var cloudShape = {
         x: xpos,
