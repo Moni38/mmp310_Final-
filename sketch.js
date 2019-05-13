@@ -38,7 +38,10 @@ function draw() {
     //This will make the background scroll endlessly
     image(bgImg, x1, 0, width, height);
     image(bgImg, x2, 0, width, height);
-    text("Merry Christmas", 100, 100);
+    textFont('Burgee');
+    textSize(50);
+    fill(255,0,0);
+    text("Merry Christmas", 50, 80);
 
     x1 -= scrollSpeed;
     x2 -= scrollSpeed;
