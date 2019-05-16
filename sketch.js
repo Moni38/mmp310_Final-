@@ -1,4 +1,4 @@
-let bgImg;
+var bgImg;
 var x1;
 var x2;
 var scrollSpeed = 1.3;
@@ -7,10 +7,13 @@ var car2;
 var car3;
 var song;
 var soundFormats;
+var snow;
+var snowing = false;
+var snowflakes = [];
 
 function preload() {
-        soundFormats('mp3', 'ogg');
-        song = loadSound("sounds/christmas.mp3");
+    soundFormats('mp3', 'ogg');
+    song = loadSound("sounds/christmas.mp3");
 
     bgImg = loadImage("images/background-image.jpg");
 
@@ -22,8 +25,8 @@ function setup() {
     x1 = 0;
     x2 = width;
 
-        song.setVolume(0.1);
-        song.play();
+    song.setVolume(0.1);
+    song.play();
 
     // create the car
     car1 = new Car(475, .5);
@@ -40,7 +43,7 @@ function draw() {
     image(bgImg, x2, 0, width, height);
     textFont('Burgee');
     textSize(45);
-    fill(255,0,0);
+    fill(255, 0, 0);
     text("Merry Christmas", 50, 80);
 
     x1 -= scrollSpeed;
@@ -80,6 +83,9 @@ function draw() {
     //color
     car3.c = color(56, 62, 252);
 
+    //snow
+    //https://p5js.org/examples/simulate-snowflakes.html
+    snow();
 }
 
 function drawStars() {
@@ -157,13 +163,64 @@ function Car(h, s) {
 
 }
 
+function snow() {
+    if (snowing == true) {
+        fill('white');
+
+        let time = frameCount / 500;
+
+        // create a random number of snowflakes each frame
+        for (let i = 0; i < random(4); i++) {
+            //creates snowflake and pushes it into array
+            snowflakes.push(new snowflake());
+        }
+
+        for (let flake of snowflakes) {
+            //updates the snows position
+            flake.update(time);
+            flake.display();
+        }
+    } else {
+        snowing = false;
+    }
+}
+
+function snowflake() {
+    this.posX = 0;
+    this.posY = random(-50, 0);
+    this.initialangle = random(0, 2 * PI);
+    this.size = random(2, 5);
+
+    //spreads snow evenly
+    this.radius = sqrt(random(pow(width / 2, 2)));
+
+    this.update = function (time) {
+        // angular speed of flakes
+        let w = 0.6;
+        let angle = w * time + this.initialangle;
+        this.posX = width / 2 + this.radius * sin(angle);
+
+        // different snows speed
+        this.posY += pow(this.size, 0.5);
+
+        //update snowflakes after leaving screen
+        if (this.posY > height) {
+            let index = snowflakes.indexOf(this);
+            snowflakes.splice(index, 1);
+        }
+    };
+
+    this.display = function () {
+        ellipse(this.posX, this.posY, this.size);
+    };
+}
+
 function mousePressed() {
     if (song.isPlaying()) {
         // .isPlaying() returns a boolean
         song.stop();
+        snowing = true;
     } else {
         song.play();
     }
 }
-
-function ending() {}
