@@ -219,6 +219,7 @@ function mousePressed() {
     if (song.isPlaying()) {
         // .isPlaying() returns a boolean
         song.stop();
+        snowing - false;
     } else {
         song.play();
         snowing = true;
